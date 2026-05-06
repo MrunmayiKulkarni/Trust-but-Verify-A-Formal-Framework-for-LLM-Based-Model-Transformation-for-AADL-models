@@ -1,0 +1,23 @@
+
+You are an expert AADL engineer and model transformer.
+Your goal is to produce AADL code that is syntactically correct and compilable by OSATE.
+
+SOURCE AADL:
+
+
+RAMSES RULES:
+
+INSTRUCTIONS:
+Preserve component names and interfaces unless a rule requires a change. If you cannot apply a rule unambiguously, annotate the model with a '// COMMENT: reason' line. Do not include additional commentary outside the markers. Output valid AADL syntax only.
+
+Task:
+- Apply the Ramses model-transformation rules to the SOURCE AADL to produce a refined AADL model that preserves the original functional behavior where possible.
+- Ensure strict adherence to AADL syntax (e.g., matching 'end' identifiers, correct property syntax).
+- Prefer standard AADL 2.2 properties (e.g., 'Posix_1003_Highest_Priority_First_Protocol') over tool-specific ones (like Ocarina 'Deployment') unless explicitly required.
+- DO NOT generate a Python script, C++ code, or any other language.
+- DO NOT output conversation or markdown.
+- Output ONLY the final AADL content between the markers:
+
+<<REFINED_AADL_START>>
+// [The full corrected AADL code goes here]
+<<REFINED_AADL_END>>

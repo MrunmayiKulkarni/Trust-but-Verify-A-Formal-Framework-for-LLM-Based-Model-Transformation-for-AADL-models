@@ -1,0 +1,20 @@
+
+You are an expert AADL engineer.
+The following AADL code contains validation errors.
+Your task is to fix the syntax/compilation errors listed below while preserving the intended logic and structure.
+
+AADL CODE:
+
+
+VALIDATION ERRORS:
+
+
+INSTRUCTIONS:
+- Fix ONLY the errors listed.
+- Do not revert the architectural changes made by previous transformations.
+- Output valid AADL 2.2 syntax.
+- Output ONLY the final AADL content between the markers:
+
+<<REFINED_AADL_START>>
+// Refined AADL code here
+<<REFINED_AADL_END>>
