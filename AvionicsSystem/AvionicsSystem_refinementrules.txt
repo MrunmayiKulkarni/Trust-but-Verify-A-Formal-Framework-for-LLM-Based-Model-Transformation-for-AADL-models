@@ -1,0 +1,24 @@
+Rule: Refine_Task_Execution_Time
+Target: All thread components (NL, NF, PL, PF, FL, FF, AP) in 'node_a.impl'.
+Action: Refine 'Compute_Execution_Time' to have non-zero minimum values (e.g., replace '0 ms' with '1 ms').
+Justification: Prevents unrealistic zero-time execution modeling, ensuring that schedulability analysis tools like Cheddar have realistic worst-case and best-case execution bounds[cite: 148, 160, 187].
+
+Rule: Concrete_Data_Type_Mapping
+Target: Data components 'pos_c', 'pos_o', 'acc_c', 'acc_o', 'angle_c', and 'angle_o'.
+Action: Add 'Data_Model::Data_Representation => Float;' and 'Data_Model::IEEE754_Precision => Simple;'.
+Justification: Translates abstract position and acceleration data into standard 32-bit floating-point formats required for actual flight control mathematics[cite: 149, 151, 153].
+
+Rule: Bus_Access_Consistency
+Target: Devices 'Operator', 'GPS', 'IMU', and 'Platform'.
+Action: Ensure that 'Actual_Connection_Binding' for all inter-component ports (V13 to V17) is explicitly mapped to the 'i2c' bus.
+Justification: Formally binds the logical sensor and actuator communication to the physical I2C bus hardware defined in the system implementation[cite: 218, 224, 229].
+
+Rule: End_to_End_Flow_Latency_Constraint
+Target: 'end to end flow etef1' in 'system implementation fcs.impl'.
+Action: Add a 'Latency' constraint property that accounts for both the 'Transmission_Time' of the 'i2c' bus and the 'Period' of the 'NL' and 'FL' threads.
+Justification: Provides the numerical requirements for the LLM to verify if the flight path from operator to platform meets the 90ms deadline[cite: 159, 181, 228].
+
+Rule: Processor_Scheduling_Refinement
+Target: 'processor cpu_rm'.
+Action: Add 'Scheduling_Protocol => (POSIX_1003_Highest_Priority_First_Protocol);' and ensure 'Priority' values for threads align with Rate Monotonic Analysis (RMA).
+Justification: Explicitly defines the preemptive scheduling behavior for the CPU to match the RMA extension used in the model[cite: 196, 229].

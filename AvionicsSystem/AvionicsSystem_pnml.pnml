@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+<net id="node_a_impl_Instance" type="http://www.pnml.org/version-2009/grammar/ptnet">
+<page id="top-level">
+
+<name>
+<text>node_a_impl_Instance PN</text>
+</name>
+
+<place id="p_on_node_a_impl_Instance">
+<name><text>p_on_node_a_impl_Instance</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<transition id="t_init_node_a_impl_Instance">
+<name><text>t_init_node_a_impl_Instance</text></name>
+</transition>
+
+<arc id="f_sys_on_init_node_a_impl_Instance" source="p_on_node_a_impl_Instance" target="t_init_node_a_impl_Instance"/>
+
+
+<place id="p_idle_FF">
+<name><text>p_idle_FF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_FF">
+<name><text>p_ready_FF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_FF">
+<name><text>p_run_FF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_FF">
+<name><text>t_disp_FF</text></name>
+</transition>
+<transition id="t_exec_FF">
+<name><text>t_exec_FF</text></name>
+</transition>
+<transition id="t_comp_FF">
+<name><text>t_comp_FF</text></name>
+</transition>
+
+<arc id="f_idle_disp_FF" source="p_idle_FF" target="t_disp_FF"/>
+<arc id="f_disp_ready_FF" source="t_disp_FF" target="p_ready_FF"/>
+<arc id="f_ready_exec_FF" source="p_ready_FF" target="t_exec_FF"/>
+<arc id="f_exec_run_FF" source="t_exec_FF" target="p_run_FF"/>
+<arc id="f_run_comp_FF" source="p_run_FF" target="t_comp_FF"/>
+<arc id="f_comp_idle_FF" source="t_comp_FF" target="p_idle_FF"/>
+
+<arc id="f_start_thread_FF" source="t_start_node_a_impl_Instance" target="p_idle_FF"/>
+
+
+
+<place id="p_idle_NL">
+<name><text>p_idle_NL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_NL">
+<name><text>p_ready_NL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_NL">
+<name><text>p_run_NL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_NL">
+<name><text>t_disp_NL</text></name>
+</transition>
+<transition id="t_exec_NL">
+<name><text>t_exec_NL</text></name>
+</transition>
+<transition id="t_comp_NL">
+<name><text>t_comp_NL</text></name>
+</transition>
+
+<arc id="f_idle_disp_NL" source="p_idle_NL" target="t_disp_NL"/>
+<arc id="f_disp_ready_NL" source="t_disp_NL" target="p_ready_NL"/>
+<arc id="f_ready_exec_NL" source="p_ready_NL" target="t_exec_NL"/>
+<arc id="f_exec_run_NL" source="t_exec_NL" target="p_run_NL"/>
+<arc id="f_run_comp_NL" source="p_run_NL" target="t_comp_NL"/>
+<arc id="f_comp_idle_NL" source="t_comp_NL" target="p_idle_NL"/>
+
+<arc id="f_start_thread_NL" source="t_start_node_a_impl_Instance" target="p_idle_NL"/>
+
+
+
+
+<place id="p_idle_NF">
+<name><text>p_idle_NF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_NF">
+<name><text>p_ready_NF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_NF">
+<name><text>p_run_NF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_NF">
+<name><text>t_disp_NF</text></name>
+</transition>
+<transition id="t_exec_NF">
+<name><text>t_exec_NF</text></name>
+</transition>
+<transition id="t_comp_NF">
+<name><text>t_comp_NF</text></name>
+</transition>
+
+<arc id="f_idle_disp_NF" source="p_idle_NF" target="t_disp_NF"/>
+<arc id="f_disp_ready_NF" source="t_disp_NF" target="p_ready_NF"/>
+<arc id="f_ready_exec_NF" source="p_ready_NF" target="t_exec_NF"/>
+<arc id="f_exec_run_NF" source="t_exec_NF" target="p_run_NF"/>
+<arc id="f_run_comp_NF" source="p_run_NF" target="t_comp_NF"/>
+<arc id="f_comp_idle_NF" source="t_comp_NF" target="p_idle_NF"/>
+
+<arc id="f_start_thread_NF" source="t_start_node_a_impl_Instance" target="p_idle_NF"/>
+
+
+
+<place id="p_idle_PL">
+<name><text>p_idle_PL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_PL">
+<name><text>p_ready_PL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_PL">
+<name><text>p_run_PL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_PL">
+<name><text>t_disp_PL</text></name>
+</transition>
+<transition id="t_exec_PL">
+<name><text>t_exec_PL</text></name>
+</transition>
+<transition id="t_comp_PL">
+<name><text>t_comp_PL</text></name>
+</transition>
+
+<arc id="f_idle_disp_PL" source="p_idle_PL" target="t_disp_PL"/>
+<arc id="f_disp_ready_PL" source="t_disp_PL" target="p_ready_PL"/>
+<arc id="f_ready_exec_PL" source="p_ready_PL" target="t_exec_PL"/>
+<arc id="f_exec_run_PL" source="t_exec_PL" target="p_run_PL"/>
+<arc id="f_run_comp_PL" source="p_run_PL" target="t_comp_PL"/>
+<arc id="f_comp_idle_PL" source="t_comp_PL" target="p_idle_PL"/>
+
+<arc id="f_start_thread_PL" source="t_start_node_a_impl_Instance" target="p_idle_PL"/>
+
+
+
+
+<place id="p_idle_PF">
+<name><text>p_idle_PF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_PF">
+<name><text>p_ready_PF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_PF">
+<name><text>p_run_PF</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_PF">
+<name><text>t_disp_PF</text></name>
+</transition>
+<transition id="t_exec_PF">
+<name><text>t_exec_PF</text></name>
+</transition>
+<transition id="t_comp_PF">
+<name><text>t_comp_PF</text></name>
+</transition>
+
+<arc id="f_idle_disp_PF" source="p_idle_PF" target="t_disp_PF"/>
+<arc id="f_disp_ready_PF" source="t_disp_PF" target="p_ready_PF"/>
+<arc id="f_ready_exec_PF" source="p_ready_PF" target="t_exec_PF"/>
+<arc id="f_exec_run_PF" source="t_exec_PF" target="p_run_PF"/>
+<arc id="f_run_comp_PF" source="p_run_PF" target="t_comp_PF"/>
+<arc id="f_comp_idle_PF" source="t_comp_PF" target="p_idle_PF"/>
+
+<arc id="f_start_thread_PF" source="t_start_node_a_impl_Instance" target="p_idle_PF"/>
+
+
+
+<place id="p_idle_FL">
+<name><text>p_idle_FL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_FL">
+<name><text>p_ready_FL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_FL">
+<name><text>p_run_FL</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_FL">
+<name><text>t_disp_FL</text></name>
+</transition>
+<transition id="t_exec_FL">
+<name><text>t_exec_FL</text></name>
+</transition>
+<transition id="t_comp_FL">
+<name><text>t_comp_FL</text></name>
+</transition>
+
+<arc id="f_idle_disp_FL" source="p_idle_FL" target="t_disp_FL"/>
+<arc id="f_disp_ready_FL" source="t_disp_FL" target="p_ready_FL"/>
+<arc id="f_ready_exec_FL" source="p_ready_FL" target="t_exec_FL"/>
+<arc id="f_exec_run_FL" source="t_exec_FL" target="p_run_FL"/>
+<arc id="f_run_comp_FL" source="p_run_FL" target="t_comp_FL"/>
+<arc id="f_comp_idle_FL" source="t_comp_FL" target="p_idle_FL"/>
+
+<arc id="f_start_thread_FL" source="t_start_node_a_impl_Instance" target="p_idle_FL"/>
+
+
+
+
+<place id="p_idle_AP">
+<name><text>p_idle_AP</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_AP">
+<name><text>p_ready_AP</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_AP">
+<name><text>p_run_AP</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_AP">
+<name><text>t_disp_AP</text></name>
+</transition>
+<transition id="t_exec_AP">
+<name><text>t_exec_AP</text></name>
+</transition>
+<transition id="t_comp_AP">
+<name><text>t_comp_AP</text></name>
+</transition>
+
+<arc id="f_idle_disp_AP" source="p_idle_AP" target="t_disp_AP"/>
+<arc id="f_disp_ready_AP" source="t_disp_AP" target="p_ready_AP"/>
+<arc id="f_ready_exec_AP" source="p_ready_AP" target="t_exec_AP"/>
+<arc id="f_exec_run_AP" source="t_exec_AP" target="p_run_AP"/>
+<arc id="f_run_comp_AP" source="p_run_AP" target="t_comp_AP"/>
+<arc id="f_comp_idle_AP" source="t_comp_AP" target="p_idle_AP"/>
+
+<arc id="f_start_thread_AP" source="t_start_node_a_impl_Instance" target="p_idle_AP"/>
+
+
+
+
+
+
+
+<place id="pdata_node_a_impl_Instance_NL">
+<name><text>pdata_node_a_impl_Instance_NL</text></name>
+</place>
+<place id="pcap_node_a_impl_Instance_NL">
+<name><text>pcap_node_a_impl_Instance_NL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_pos_c____NL_pos_c" source="pcap_node_a_impl_Instance_NL" target="t_comp_node_a_impl_Instance"/>
+<arc id="f_data_prod_pos_c____NL_pos_c" source="t_comp_node_a_impl_Instance" target="pdata_node_a_impl_Instance_NL"/>
+<arc id="f_data_cons_pos_c____NL_pos_c" source="pdata_node_a_impl_Instance_NL" target="t_exec_NL"/>
+<arc id="f_cap_cons_pos_c____NL_pos_c" source="t_exec_NL" target="pcap_node_a_impl_Instance_NL"/>
+
+
+<place id="pdata_node_a_impl_Instance_FF">
+<name><text>pdata_node_a_impl_Instance_FF</text></name>
+</place>
+<place id="pcap_node_a_impl_Instance_FF">
+<name><text>pcap_node_a_impl_Instance_FF</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_angle____FF_angle" source="pcap_node_a_impl_Instance_FF" target="t_comp_node_a_impl_Instance"/>
+<arc id="f_data_prod_angle____FF_angle" source="t_comp_node_a_impl_Instance" target="pdata_node_a_impl_Instance_FF"/>
+<arc id="f_data_cons_angle____FF_angle" source="pdata_node_a_impl_Instance_FF" target="t_exec_FF"/>
+<arc id="f_cap_cons_angle____FF_angle" source="t_exec_FF" target="pcap_node_a_impl_Instance_FF"/>
+
+
+<place id="pdata_node_a_impl_Instance_AP">
+<name><text>pdata_node_a_impl_Instance_AP</text></name>
+</place>
+<place id="pcap_node_a_impl_Instance_AP">
+<name><text>pcap_node_a_impl_Instance_AP</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_position____AP_position" source="pcap_node_a_impl_Instance_AP" target="t_comp_node_a_impl_Instance"/>
+<arc id="f_data_prod_position____AP_position" source="t_comp_node_a_impl_Instance" target="pdata_node_a_impl_Instance_AP"/>
+<arc id="f_data_cons_position____AP_position" source="pdata_node_a_impl_Instance_AP" target="t_exec_AP"/>
+<arc id="f_cap_cons_position____AP_position" source="t_exec_AP" target="pcap_node_a_impl_Instance_AP"/>
+
+
+<place id="pdata_node_a_impl_Instance_AP">
+<name><text>pdata_node_a_impl_Instance_AP</text></name>
+</place>
+<place id="pcap_node_a_impl_Instance_AP">
+<name><text>pcap_node_a_impl_Instance_AP</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_acc____AP_acc" source="pcap_node_a_impl_Instance_AP" target="t_comp_node_a_impl_Instance"/>
+<arc id="f_data_prod_acc____AP_acc" source="t_comp_node_a_impl_Instance" target="pdata_node_a_impl_Instance_AP"/>
+<arc id="f_data_cons_acc____AP_acc" source="pdata_node_a_impl_Instance_AP" target="t_exec_AP"/>
+<arc id="f_cap_cons_acc____AP_acc" source="t_exec_AP" target="pcap_node_a_impl_Instance_AP"/>
+
+
+<place id="pdata_FF_FL">
+<name><text>pdata_FF_FL</text></name>
+</place>
+<place id="pcap_FF_FL">
+<name><text>pcap_FF_FL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_FF_angle_o____FL_angle_o" source="pcap_FF_FL" target="t_comp_FF"/>
+<arc id="f_data_prod_FF_angle_o____FL_angle_o" source="t_comp_FF" target="pdata_FF_FL"/>
+<arc id="f_data_cons_FF_angle_o____FL_angle_o" source="pdata_FF_FL" target="t_exec_FL"/>
+<arc id="f_cap_cons_FF_angle_o____FL_angle_o" source="t_exec_FL" target="pcap_FF_FL"/>
+
+
+<place id="pdata_NL_PL">
+<name><text>pdata_NL_PL</text></name>
+</place>
+<place id="pcap_NL_PL">
+<name><text>pcap_NL_PL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_NL_acc_c____PL_acc_c" source="pcap_NL_PL" target="t_comp_NL"/>
+<arc id="f_data_prod_NL_acc_c____PL_acc_c" source="t_comp_NL" target="pdata_NL_PL"/>
+<arc id="f_data_cons_NL_acc_c____PL_acc_c" source="pdata_NL_PL" target="t_exec_PL"/>
+<arc id="f_cap_cons_NL_acc_c____PL_acc_c" source="t_exec_PL" target="pcap_NL_PL"/>
+
+
+<place id="pdata_NF_NL">
+<name><text>pdata_NF_NL</text></name>
+</place>
+<place id="pcap_NF_NL">
+<name><text>pcap_NF_NL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_NF_pos_o____NL_pos_o" source="pcap_NF_NL" target="t_comp_NF"/>
+<arc id="f_data_prod_NF_pos_o____NL_pos_o" source="t_comp_NF" target="pdata_NF_NL"/>
+<arc id="f_data_cons_NF_pos_o____NL_pos_o" source="pdata_NF_NL" target="t_exec_NL"/>
+<arc id="f_cap_cons_NF_pos_o____NL_pos_o" source="t_exec_NL" target="pcap_NF_NL"/>
+
+
+<place id="pdata_PL_FL">
+<name><text>pdata_PL_FL</text></name>
+</place>
+<place id="pcap_PL_FL">
+<name><text>pcap_PL_FL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_PL_angle_c____FL_angle_c" source="pcap_PL_FL" target="t_comp_PL"/>
+<arc id="f_data_prod_PL_angle_c____FL_angle_c" source="t_comp_PL" target="pdata_PL_FL"/>
+<arc id="f_data_cons_PL_angle_c____FL_angle_c" source="pdata_PL_FL" target="t_exec_FL"/>
+<arc id="f_cap_cons_PL_angle_c____FL_angle_c" source="t_exec_FL" target="pcap_PL_FL"/>
+
+
+<place id="pdata_PF_PL">
+<name><text>pdata_PF_PL</text></name>
+</place>
+<place id="pcap_PF_PL">
+<name><text>pcap_PF_PL</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_PF_acc_o____PL_acc_o" source="pcap_PF_PL" target="t_comp_PF"/>
+<arc id="f_data_prod_PF_acc_o____PL_acc_o" source="t_comp_PF" target="pdata_PF_PL"/>
+<arc id="f_data_cons_PF_acc_o____PL_acc_o" source="pdata_PF_PL" target="t_exec_PL"/>
+<arc id="f_cap_cons_PF_acc_o____PL_acc_o" source="t_exec_PL" target="pcap_PF_PL"/>
+
+
+<place id="pdata_FL_node_a_impl_Instance">
+<name><text>pdata_FL_node_a_impl_Instance</text></name>
+</place>
+<place id="pcap_FL_node_a_impl_Instance">
+<name><text>pcap_FL_node_a_impl_Instance</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_FL_order____order" source="pcap_FL_node_a_impl_Instance" target="t_comp_FL"/>
+<arc id="f_data_prod_FL_order____order" source="t_comp_FL" target="pdata_FL_node_a_impl_Instance"/>
+<arc id="f_data_cons_FL_order____order" source="pdata_FL_node_a_impl_Instance" target="t_exec_node_a_impl_Instance"/>
+<arc id="f_cap_cons_FL_order____order" source="t_exec_node_a_impl_Instance" target="pcap_FL_node_a_impl_Instance"/>
+
+
+<place id="pdata_AP_PF">
+<name><text>pdata_AP_PF</text></name>
+</place>
+<place id="pcap_AP_PF">
+<name><text>pcap_AP_PF</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_AP_acc_i____PF_acc_i" source="pcap_AP_PF" target="t_comp_AP"/>
+<arc id="f_data_prod_AP_acc_i____PF_acc_i" source="t_comp_AP" target="pdata_AP_PF"/>
+<arc id="f_data_cons_AP_acc_i____PF_acc_i" source="pdata_AP_PF" target="t_exec_PF"/>
+<arc id="f_cap_cons_AP_acc_i____PF_acc_i" source="t_exec_PF" target="pcap_AP_PF"/>
+
+
+<place id="pdata_AP_NF">
+<name><text>pdata_AP_NF</text></name>
+</place>
+<place id="pcap_AP_NF">
+<name><text>pcap_AP_NF</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_AP_pos_i____NF_pos_i" source="pcap_AP_NF" target="t_comp_AP"/>
+<arc id="f_data_prod_AP_pos_i____NF_pos_i" source="t_comp_AP" target="pdata_AP_NF"/>
+<arc id="f_data_cons_AP_pos_i____NF_pos_i" source="pdata_AP_NF" target="t_exec_NF"/>
+<arc id="f_cap_cons_AP_pos_i____NF_pos_i" source="t_exec_NF" target="pcap_AP_NF"/>
+
+
+</page>
+</net>
+</pnml>
