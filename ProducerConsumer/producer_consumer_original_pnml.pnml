@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="prodcons_soft_impl_Instance" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <page id="top-level">
+      <name>
+        <text>prodcons_soft_impl_Instance PN</text>
+      </name>
+      <place id="p_on_prodcons_soft_impl_Instance">
+        <name><text>p_on_prodcons_soft_impl_Instance</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <transition id="t_init_prodcons_soft_impl_Instance">
+        <name><text>t_init_prodcons_soft_impl_Instance</text></name>
+      </transition>
+      <arc id="f_sys_on_init_prodcons_soft_impl_Instance" source="p_on_prodcons_soft_impl_Instance" target="t_init_prodcons_soft_impl_Instance"/>
+      <place id="p_active_prodcons_soft_impl_Instance">
+        <name><text>p_active_prodcons_soft_impl_Instance</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_start_prodcons_soft_impl_Instance">
+        <name><text>t_start_prodcons_soft_impl_Instance</text></name>
+      </transition>
+      <transition id="t_stop_prodcons_soft_impl_Instance">
+        <name><text>t_stop_prodcons_soft_impl_Instance</text></name>
+      </transition>
+      <arc id="f_proc_active_start_prodcons_soft_impl_Instance" source="p_active_prodcons_soft_impl_Instance" target="t_start_prodcons_soft_impl_Instance"/>
+      <arc id="f_proc_active_stop_prodcons_soft_impl_Instance" source="p_active_prodcons_soft_impl_Instance" target="t_stop_prodcons_soft_impl_Instance"/>
+      <arc id="f_sys_to_proc_prodcons_soft_impl_Instance" source="t_init_prodcons_soft_impl_Instance" target="p_active_prodcons_soft_impl_Instance"/>
+      <place id="p_idle_Init1">
+        <name><text>p_idle_Init1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_ready_Init1">
+        <name><text>p_ready_Init1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_run_Init1">
+        <name><text>p_run_Init1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_disp_Init1">
+        <name><text>t_disp_Init1</text></name>
+      </transition>
+      <transition id="t_exec_Init1">
+        <name><text>t_exec_Init1</text></name>
+      </transition>
+      <transition id="t_comp_Init1">
+        <name><text>t_comp_Init1</text></name>
+      </transition>
+      <arc id="f_idle_disp_Init1" source="p_idle_Init1" target="t_disp_Init1"/>
+      <arc id="f_disp_ready_Init1" source="t_disp_Init1" target="p_ready_Init1"/>
+      <arc id="f_ready_exec_Init1" source="p_ready_Init1" target="t_exec_Init1"/>
+      <arc id="f_exec_run_Init1" source="t_exec_Init1" target="p_run_Init1"/>
+      <arc id="f_run_comp_Init1" source="p_run_Init1" target="t_comp_Init1"/>
+      <arc id="f_comp_idle_Init1" source="t_comp_Init1" target="p_idle_Init1"/>
+      <arc id="f_start_thread_Init1" source="t_start_prodcons_soft_impl_Instance" target="p_idle_Init1"/>
+      <place id="p_idle_Producer1">
+        <name><text>p_idle_Producer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_ready_Producer1">
+        <name><text>p_ready_Producer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_run_Producer1">
+        <name><text>p_run_Producer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_disp_Producer1">
+        <name><text>t_disp_Producer1</text></name>
+      </transition>
+      <transition id="t_exec_Producer1">
+        <name><text>t_exec_Producer1</text></name>
+      </transition>
+      <transition id="t_comp_Producer1">
+        <name><text>t_comp_Producer1</text></name>
+      </transition>
+      <arc id="f_idle_disp_Producer1" source="p_idle_Producer1" target="t_disp_Producer1"/>
+      <arc id="f_disp_ready_Producer1" source="t_disp_Producer1" target="p_ready_Producer1"/>
+      <arc id="f_ready_exec_Producer1" source="p_ready_Producer1" target="t_exec_Producer1"/>
+      <arc id="f_exec_run_Producer1" source="t_exec_Producer1" target="p_run_Producer1"/>
+      <arc id="f_run_comp_Producer1" source="p_run_Producer1" target="t_comp_Producer1"/>
+      <arc id="f_comp_idle_Producer1" source="t_comp_Producer1" target="p_idle_Producer1"/>
+      <arc id="f_start_thread_Producer1" source="t_start_prodcons_soft_impl_Instance" target="p_idle_Producer1"/>
+      <place id="p_idle_Consumer1">
+        <name><text>p_idle_Consumer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_ready_Consumer1">
+        <name><text>p_ready_Consumer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_run_Consumer1">
+        <name><text>p_run_Consumer1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_disp_Consumer1">
+        <name><text>t_disp_Consumer1</text></name>
+      </transition>
+      <transition id="t_exec_Consumer1">
+        <name><text>t_exec_Consumer1</text></name>
+      </transition>
+      <transition id="t_comp_Consumer1">
+        <name><text>t_comp_Consumer1</text></name>
+      </transition>
+      <arc id="f_idle_disp_Consumer1" source="p_idle_Consumer1" target="t_disp_Consumer1"/>
+      <arc id="f_disp_ready_Consumer1" source="t_disp_Consumer1" target="p_ready_Consumer1"/>
+      <arc id="f_ready_exec_Consumer1" source="p_ready_Consumer1" target="t_exec_Consumer1"/>
+      <arc id="f_exec_run_Consumer1" source="t_exec_Consumer1" target="p_run_Consumer1"/>
+      <arc id="f_run_comp_Consumer1" source="p_run_Consumer1" target="t_comp_Consumer1"/>
+      <arc id="f_comp_idle_Consumer1" source="t_comp_Consumer1" target="p_idle_Consumer1"/>
+      <arc id="f_start_thread_Consumer1" source="t_start_prodcons_soft_impl_Instance" target="p_idle_Consumer1"/>
+    </page>
+  </net>
+</pnml>

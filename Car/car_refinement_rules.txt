@@ -1,0 +1,24 @@
+Rule: Refine_Thread_Priorities
+Target: T1 and T2 in Process PA.A, and T7, T8, T9 in Process PC.C.
+Action: Add Thread_Properties::Priority => [Value], where higher frequency threads (lower Period) receive higher priority values.
+Justification: Required for POSIX_1003_HIGHEST_PRIORITY_FIRST_PROTOCOL execution on CPU.A and CPU.C to ensure predictable preemptive scheduling.
+
+Rule: Formalize_EDF_Constraints
+Target: T3, T4, T5, and T6 in Process PB.B.
+Action: Add Thread_Properties::Deadline => [Value] for any thread where it is missing, ensuring Deadline <= Period.
+Justification: Supports the EDF (Earliest Deadline First) scheduling protocol defined for CPU.B by providing explicit timing constraints for the scheduler.
+
+Rule: CAN_Bus_Payload_Refinement
+Target: Data components M1, M2, M3, and M4.
+Action: Add Data_Model::Source_Data_Size => [Size in Bytes] (e.g., 8 Bytes for standard CAN frames).
+Justification: Defines the physical size of messages sent over the CAN bus to allow for network utilization and latency analysis.
+
+Rule: Processor_Binding_Validation
+Target: system implementation Car.impl.
+Action: Add Communication_Properties::Actual_Connection_Binding => (reference (CAN)) to all port connections crossing process boundaries.
+Justification: Ensures that the LLM explicitly maps software communication (C1, C2, C3) to the physical CAN bus hardware for end-to-end flow analysis.
+
+Rule: Buffer_Size_for_Event_Data
+Target: All 'out event data port' and 'in event data port' features in PA, PB, and PC.
+Action: Add Communication_Properties::Queue_Size => 10.
+Justification: Prevents frame loss during bursts of traffic on the CAN bus, especially for periodic control messages like M1 and M2.

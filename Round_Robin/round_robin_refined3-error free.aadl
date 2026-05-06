@@ -1,0 +1,79 @@
+package Round_Robin
+public
+
+with processors;
+with Thread_Properties;
+with Timing_Properties;
+with Memory_Properties;
+with SEI;
+
+thread T
+	properties
+		Dispatch_Protocol => Periodic;
+		Priority => 1;
+end T;
+
+process P
+end P;
+
+process implementation P.impl
+	subcomponents
+		T1: thread T {
+			Time_Slot => (1, 3);
+			Compute_Execution_Time => 2 ms .. 10 ms;
+			Period => 20 ms;
+			Deadline => 20 ms;
+			Memory_Properties::Stack_Size => 1024 Bytes;
+		};
+		T2: thread T {
+			Time_Slot => (2);
+			Compute_Execution_Time => 2 ms .. 10 ms;
+			Period => 20 ms;
+			Deadline => 20 ms;
+			Memory_Properties::Stack_Size => 1024 Bytes;
+		};
+		T_Diag: thread T {
+			Time_Slot => (4);
+			Compute_Execution_Time => 1 ms .. 2 ms;
+			Period => 20 ms;
+			Deadline => 20 ms;
+			Memory_Properties::Stack_Size => 1024 Bytes;
+		};
+end P.impl;
+
+processor Proc extends processors::Proc
+end Proc;
+
+processor implementation Proc.RR_NoPreemption extends processors::Proc.RR_NoPreemption
+	properties
+		-- SEI::Cycle_Time is not a standard SEI property; using Timing_Properties::Clock_Period for OSATE compatibility
+		Timing_Properties::Clock_Period => 10 ms;
+end Proc.RR_NoPreemption;
+
+processor implementation Proc.RR_Preemption extends processors::Proc.RR_Preemption
+	properties
+		-- SEI::Cycle_Time is not a standard SEI property; using Timing_Properties::Clock_Period for OSATE compatibility
+		Timing_Properties::Clock_Period => 10 ms;
+end Proc.RR_Preemption;
+
+system RR
+end RR;
+
+system implementation RR.impl_nopreempt
+	subcomponents
+		P: process P.impl;
+		Proc: processor Proc.RR_NoPreemption;
+	properties
+		Actual_Processor_Binding => (reference (Proc)) applies to P;
+		Scheduling_Protocol => (Round_Robin_Protocol) applies to Proc;
+end RR.impl_nopreempt;
+
+system implementation RR.impl_preempt
+	subcomponents
+		P: process P.impl;
+		Proc: processor Proc.RR_Preemption;
+	properties
+		Actual_Processor_Binding => (reference (Proc)) applies to P;
+		Preemptive_Scheduler => true applies to Proc;
+end RR.impl_preempt;
+end Round_Robin;

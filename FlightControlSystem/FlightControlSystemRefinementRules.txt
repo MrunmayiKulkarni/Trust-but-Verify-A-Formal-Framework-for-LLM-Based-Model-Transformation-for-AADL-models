@@ -1,0 +1,50 @@
+Rule: Refine_Periodic_Dispatch
+
+Target: All thread components.
+
+Action: Apply Thread_Properties::Dispatch_Protocol => Periodic.
+
+
+Justification: Ensures sensors and control laws execute at fixed intervals for predictable flight dynamics.
+
+
+Rule: Bind_Processes_To_Partitions
+
+Target: sensor_process, control_process, actuator_process.
+
+
+Action: Create a virtual processor subcomponent for each process within the flight_computer to represent ARINC653 partitions.
+
+
+
+Justification: Provides spatial isolation between sensor data handling and actuator commands.
+
+Rule: Concrete_Data_Mapping
+
+Target: data Position, data Velocity, data ControlCommand.
+
+Action: Add Data_Model::Data_Representation => Float.
+
+
+Justification: Translates abstract data types into standard floating-point formats for the flight_computer.
+
+
+Rule: Bus_Access_Refinement
+
+Target: Connections sensor_to_control_position, sensor_to_control_velocity, etc.
+
+
+Action: Map these connections to specific bus protocols (e.g., MIL-STD-1553 or AFDX) through the avionics_bus.
+
+
+
+Justification: Defines how data is physically packaged and transmitted over the hardware bus.
+
+Rule: Refine_Event_Port_to_Queue
+
+Target: event data port thrust_adjustment, event port sensor_status.
+
+Action: Add Communication_Properties::Queue_Size => 5.
+
+
+Justification: Prevents data loss for event-based signals like thrust adjustments by defining a buffer size.

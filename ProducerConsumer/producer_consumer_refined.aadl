@@ -1,0 +1,105 @@
+package Producer_Consummer_Software
+public
+
+-- Data --
+data Shared_Buffer
+end Shared_Buffer;
+
+-- Subprograms --
+subprogram Producer_Spg
+features
+data_out : out parameter Shared_Buffer;
+properties
+source_name => "producer";
+source_text => ("prodcons.c");
+end Producer_Spg;
+
+subprogram Consumer_Spg
+features
+data_in : in parameter Shared_Buffer;
+properties
+source_name => "consumer";
+source_text => ("prodcons.c");
+end Consumer_Spg;
+
+subprogram Init_Spg
+properties
+source_name => "init";
+source_text => ("prodcons.c");
+end Init_Spg;
+
+-- Threads --
+thread Init
+end Init;
+
+thread Producer
+features
+shared_access : requires data access Shared_Buffer;
+end Producer;
+
+thread Consumer
+features
+shared_access : requires data access Shared_Buffer;
+end Consumer;
+
+thread implementation Init.impl
+calls
+Mycalls: {
+I_Spg : subprogram Init_Spg;
+};
+properties
+Dispatch_Protocol      => Periodic;
+Period                 => 1000 ms;
+Compute_Execution_Time => 0 ms .. 3 ms;
+Deadline               => 1000 ms;
+Priority               => 100;
+Stack_Size             => 5000 Bytes;
+Code_Size              => 678 Bytes;
+end Init.impl;
+
+thread implementation Producer.impl
+calls
+Mycalls: {
+P_Spg : subprogram Producer_Spg;
+};
+properties
+Dispatch_Protocol      => Periodic;
+Period                 => 1000 ms;
+Compute_Execution_Time => 0 ms .. 3 ms;
+Deadline               => 1000 ms;
+Priority               => 101;
+Stack_Size             => 5000 Bytes;
+Code_Size              => 678 Bytes;
+end Producer.impl;
+
+thread implementation Consumer.impl
+calls
+Mycalls: {
+C_Spg : subprogram Consumer_Spg;
+};
+properties
+Dispatch_Protocol      => Periodic;
+Period                 => 1000 ms;
+Compute_Execution_Time => 0 ms .. 3 ms;
+Deadline               => 1000 ms;
+Priority               => 101;
+Stack_Size             => 5000 Bytes;
+Code_Size              => 678 Bytes;
+end Consumer.impl;
+
+-- Processes --
+process prodcons_soft
+end prodcons_soft;
+
+process implementation prodcons_soft.impl
+subcomponents
+Init1     : thread Init.impl;
+Producer1 : thread Producer.impl;
+Consumer1 : thread Consumer.impl;
+data_rw   : data Shared_Buffer;
+connections
+access_p : data access data_rw -> Producer1.shared_access;
+access_c : data access data_rw -> Consumer1.shared_access;
+end prodcons_soft.impl;
+
+end Producer_Consummer_Software;

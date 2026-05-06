@@ -1,0 +1,19 @@
+### Rule 1: Time-Slot Synchronization Refinement
+- Locate the 'process implementation P.impl'.
+- Within the 'subcomponents' for 'T1' and 'T2', refine the 'Time_Slot' property to ensure no overlap between threads, explicitly defining a third time slot for a new diagnostic thread if required.
+- Add a 'Stack_Size' property to both 'T1' and 'T2' (e.g., '1024 Bytes') to account for memory usage during context switching between slots.
+
+### Rule 2: Processor Capacity and Speed Specification
+- Locate the 'processor' definitions 'Proc.RR_NoPreemption' and 'Proc.RR_Preemption'.
+- Refine these implementations by adding a 'Processor_Capacity => 100.0;' property to define the total available CPU cycles.
+- Add a 'Cycle_Time' property (e.g., '10 ms') to explicitly define the granularity of the Round-Robin clock tick.
+
+### Rule 3: Scheduling Policy Documentation
+- Identify the 'system implementation RR.impl_nopreempt' and 'RR.impl_preempt'.
+- For 'RR.impl_nopreempt', add a 'Scheduling_Protocol => (Round_Robin_Protocol)' property to the processor 'Proc' to formally bind the scheduling logic.
+- For 'RR.impl_preempt', add a 'Preemptive_Scheduler => true;' property to explicitly distinguish it from the non-preemptive variant.
+
+### Rule 4: Execution Time and Period Consistency
+- Locate 'thread T1' and 'thread T2' in 'P.impl'.
+- Refine the 'Compute_Execution_Time' to have a non-zero minimum (e.g., '2 ms .. 10 ms') to prevent unrealistic zero-time execution modeling.
+- Add a 'Deadline' property to both threads that is equal to their 'Period' (20 ms) to ensure the LLM enforces scheduling feasibility within the specified time slots.

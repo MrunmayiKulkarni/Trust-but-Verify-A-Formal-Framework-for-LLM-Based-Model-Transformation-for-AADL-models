@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+<net id="FlightControlSystem_Impl_Instance" type="http://www.pnml.org/version-2009/grammar/ptnet">
+<page id="top-level">
+
+<name>
+<text>FlightControlSystem_Impl_Instance PN</text>
+</name>
+
+<place id="p_on_FlightControlSystem_Impl_Instance">
+<name><text>p_on_FlightControlSystem_Impl_Instance</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<transition id="t_init_FlightControlSystem_Impl_Instance">
+<name><text>t_init_FlightControlSystem_Impl_Instance</text></name>
+</transition>
+
+<arc id="f_sys_on_init_FlightControlSystem_Impl_Instance" source="p_on_FlightControlSystem_Impl_Instance" target="t_init_FlightControlSystem_Impl_Instance"/>
+
+<place id="p_active_sensor_process">
+<name><text>p_active_sensor_process</text></name>
+<initialMarking><text>0</text></initialMarking> 
+</place>
+
+<transition id="t_start_sensor_process">
+<name><text>t_start_sensor_process</text></name>
+</transition>
+
+<transition id="t_stop_sensor_process">
+<name><text>t_stop_sensor_process</text></name>
+</transition>
+
+<arc id="f_proc_active_start_sensor_process" source="p_active_sensor_process" target="t_start_sensor_process"/>
+<arc id="f_proc_active_stop_sensor_process" source="p_active_sensor_process" target="t_stop_sensor_process"/>
+<arc id="f_sys_to_proc_sensor_process" source="t_init_FlightControlSystem_Impl_Instance" target="p_active_sensor_process"/>
+<place id="p_active_control_process">
+<name><text>p_active_control_process</text></name>
+<initialMarking><text>0</text></initialMarking> 
+</place>
+
+<transition id="t_start_control_process">
+<name><text>t_start_control_process</text></name>
+</transition>
+
+<transition id="t_stop_control_process">
+<name><text>t_stop_control_process</text></name>
+</transition>
+
+<arc id="f_proc_active_start_control_process" source="p_active_control_process" target="t_start_control_process"/>
+<arc id="f_proc_active_stop_control_process" source="p_active_control_process" target="t_stop_control_process"/>
+<arc id="f_sys_to_proc_control_process" source="t_init_FlightControlSystem_Impl_Instance" target="p_active_control_process"/>
+<place id="p_active_actuator_process">
+<name><text>p_active_actuator_process</text></name>
+<initialMarking><text>0</text></initialMarking> 
+</place>
+
+<transition id="t_start_actuator_process">
+<name><text>t_start_actuator_process</text></name>
+</transition>
+
+<transition id="t_stop_actuator_process">
+<name><text>t_stop_actuator_process</text></name>
+</transition>
+
+<arc id="f_proc_active_start_actuator_process" source="p_active_actuator_process" target="t_start_actuator_process"/>
+<arc id="f_proc_active_stop_actuator_process" source="p_active_actuator_process" target="t_stop_actuator_process"/>
+<arc id="f_sys_to_proc_actuator_process" source="t_init_FlightControlSystem_Impl_Instance" target="p_active_actuator_process"/>
+
+<place id="p_idle_position_sensor">
+<name><text>p_idle_position_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_position_sensor">
+<name><text>p_ready_position_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_position_sensor">
+<name><text>p_run_position_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_position_sensor">
+<name><text>t_disp_position_sensor</text></name>
+</transition>
+<transition id="t_exec_position_sensor">
+<name><text>t_exec_position_sensor</text></name>
+</transition>
+<transition id="t_comp_position_sensor">
+<name><text>t_comp_position_sensor</text></name>
+</transition>
+
+<arc id="f_idle_disp_position_sensor" source="p_idle_position_sensor" target="t_disp_position_sensor"/>
+<arc id="f_disp_ready_position_sensor" source="t_disp_position_sensor" target="p_ready_position_sensor"/>
+<arc id="f_ready_exec_position_sensor" source="p_ready_position_sensor" target="t_exec_position_sensor"/>
+<arc id="f_exec_run_position_sensor" source="t_exec_position_sensor" target="p_run_position_sensor"/>
+<arc id="f_run_comp_position_sensor" source="p_run_position_sensor" target="t_comp_position_sensor"/>
+<arc id="f_comp_idle_position_sensor" source="t_comp_position_sensor" target="p_idle_position_sensor"/>
+
+<arc id="f_start_thread_position_sensor" source="t_start_sensor_process" target="p_idle_position_sensor"/>
+
+<place id="pbuf_position_sensor_sensor_status">
+<name><text>pbuf_position_sensor_sensor_status</text></name>
+</place>
+
+<place id="pbuf_cap_position_sensor_sensor_status">
+<name><text>pbuf_cap_position_sensor_sensor_status</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<transition id="tsend_position_sensor_sensor_status">
+<name><text>tsend_position_sensor_sensor_status</text></name>
+</transition>
+
+<arc id="f_comp_buf_cap_position_sensor_sensor_status" source="pbuf_cap_position_sensor_sensor_status" target="t_comp_position_sensor"/>
+<arc id="f_comp_buf_position_sensor_sensor_status" source="t_comp_position_sensor" target="pbuf_position_sensor_sensor_status"/>
+<arc id="f_buf_send_position_sensor_sensor_status" source="pbuf_position_sensor_sensor_status" target="tsend_position_sensor_sensor_status"/>
+<arc id="f_send_buf_cap_position_sensor_sensor_status" source="tsend_position_sensor_sensor_status" target="pbuf_cap_position_sensor_sensor_status"/>
+
+
+<place id="p_idle_velocity_sensor">
+<name><text>p_idle_velocity_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_velocity_sensor">
+<name><text>p_ready_velocity_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_velocity_sensor">
+<name><text>p_run_velocity_sensor</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_velocity_sensor">
+<name><text>t_disp_velocity_sensor</text></name>
+</transition>
+<transition id="t_exec_velocity_sensor">
+<name><text>t_exec_velocity_sensor</text></name>
+</transition>
+<transition id="t_comp_velocity_sensor">
+<name><text>t_comp_velocity_sensor</text></name>
+</transition>
+
+<arc id="f_idle_disp_velocity_sensor" source="p_idle_velocity_sensor" target="t_disp_velocity_sensor"/>
+<arc id="f_disp_ready_velocity_sensor" source="t_disp_velocity_sensor" target="p_ready_velocity_sensor"/>
+<arc id="f_ready_exec_velocity_sensor" source="p_ready_velocity_sensor" target="t_exec_velocity_sensor"/>
+<arc id="f_exec_run_velocity_sensor" source="t_exec_velocity_sensor" target="p_run_velocity_sensor"/>
+<arc id="f_run_comp_velocity_sensor" source="p_run_velocity_sensor" target="t_comp_velocity_sensor"/>
+<arc id="f_comp_idle_velocity_sensor" source="t_comp_velocity_sensor" target="p_idle_velocity_sensor"/>
+
+<arc id="f_start_thread_velocity_sensor" source="t_start_sensor_process" target="p_idle_velocity_sensor"/>
+
+
+<place id="pbuf_velocity_sensor_thrust_adjustment">
+<name><text>pbuf_velocity_sensor_thrust_adjustment</text></name>
+</place>
+
+<place id="pbuf_cap_velocity_sensor_thrust_adjustment">
+<name><text>pbuf_cap_velocity_sensor_thrust_adjustment</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<transition id="tsend_velocity_sensor_thrust_adjustment">
+<name><text>tsend_velocity_sensor_thrust_adjustment</text></name>
+</transition>
+
+<arc id="f_comp_buf_cap_velocity_sensor_thrust_adjustment" source="pbuf_cap_velocity_sensor_thrust_adjustment" target="t_comp_velocity_sensor"/>
+<arc id="f_comp_buf_velocity_sensor_thrust_adjustment" source="t_comp_velocity_sensor" target="pbuf_velocity_sensor_thrust_adjustment"/>
+<arc id="f_buf_send_velocity_sensor_thrust_adjustment" source="pbuf_velocity_sensor_thrust_adjustment" target="tsend_velocity_sensor_thrust_adjustment"/>
+<arc id="f_send_buf_cap_velocity_sensor_thrust_adjustment" source="tsend_velocity_sensor_thrust_adjustment" target="pbuf_cap_velocity_sensor_thrust_adjustment"/>
+
+<place id="p_idle_control_law">
+<name><text>p_idle_control_law</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_control_law">
+<name><text>p_ready_control_law</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_control_law">
+<name><text>p_run_control_law</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_control_law">
+<name><text>t_disp_control_law</text></name>
+</transition>
+<transition id="t_exec_control_law">
+<name><text>t_exec_control_law</text></name>
+</transition>
+<transition id="t_comp_control_law">
+<name><text>t_comp_control_law</text></name>
+</transition>
+
+<arc id="f_idle_disp_control_law" source="p_idle_control_law" target="t_disp_control_law"/>
+<arc id="f_disp_ready_control_law" source="t_disp_control_law" target="p_ready_control_law"/>
+<arc id="f_ready_exec_control_law" source="p_ready_control_law" target="t_exec_control_law"/>
+<arc id="f_exec_run_control_law" source="t_exec_control_law" target="p_run_control_law"/>
+<arc id="f_run_comp_control_law" source="p_run_control_law" target="t_comp_control_law"/>
+<arc id="f_comp_idle_control_law" source="t_comp_control_law" target="p_idle_control_law"/>
+
+<arc id="f_start_thread_control_law" source="t_start_control_process" target="p_idle_control_law"/>
+
+
+
+
+<place id="pqueue_control_law_thrust_input">
+<name><text>pqueue_control_law_thrust_input</text></name>
+</place>
+<arc id="f_queue_disp_control_law_thrust_input" source="pqueue_control_law_thrust_input" target="t_disp_control_law"/>
+
+<place id="p_idle_main_actuator">
+<name><text>p_idle_main_actuator</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_ready_main_actuator">
+<name><text>p_ready_main_actuator</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+<place id="p_run_main_actuator">
+<name><text>p_run_main_actuator</text></name>
+<initialMarking><text>0</text></initialMarking>
+</place>
+
+<transition id="t_disp_main_actuator">
+<name><text>t_disp_main_actuator</text></name>
+</transition>
+<transition id="t_exec_main_actuator">
+<name><text>t_exec_main_actuator</text></name>
+</transition>
+<transition id="t_comp_main_actuator">
+<name><text>t_comp_main_actuator</text></name>
+</transition>
+
+<arc id="f_idle_disp_main_actuator" source="p_idle_main_actuator" target="t_disp_main_actuator"/>
+<arc id="f_disp_ready_main_actuator" source="t_disp_main_actuator" target="p_ready_main_actuator"/>
+<arc id="f_ready_exec_main_actuator" source="p_ready_main_actuator" target="t_exec_main_actuator"/>
+<arc id="f_exec_run_main_actuator" source="t_exec_main_actuator" target="p_run_main_actuator"/>
+<arc id="f_run_comp_main_actuator" source="p_run_main_actuator" target="t_comp_main_actuator"/>
+<arc id="f_comp_idle_main_actuator" source="t_comp_main_actuator" target="p_idle_main_actuator"/>
+
+<arc id="f_start_thread_main_actuator" source="t_start_actuator_process" target="p_idle_main_actuator"/>
+
+
+<place id="pqueue_main_actuator_activation">
+<name><text>pqueue_main_actuator_activation</text></name>
+</place>
+<arc id="f_queue_disp_main_actuator_activation" source="pqueue_main_actuator_activation" target="t_disp_main_actuator"/>
+
+
+
+<place id="pdata_position_sensor_control_law">
+<name><text>pdata_position_sensor_control_law</text></name>
+</place>
+<place id="pcap_position_sensor_control_law">
+<name><text>pcap_position_sensor_control_law</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_sensor_process_position_sensor_position_output____control_process_control_law_position_input" source="pcap_position_sensor_control_law" target="t_comp_position_sensor"/>
+<arc id="f_data_prod_sensor_process_position_sensor_position_output____control_process_control_law_position_input" source="t_comp_position_sensor" target="pdata_position_sensor_control_law"/>
+<arc id="f_data_cons_sensor_process_position_sensor_position_output____control_process_control_law_position_input" source="pdata_position_sensor_control_law" target="t_exec_control_law"/>
+<arc id="f_cap_cons_sensor_process_position_sensor_position_output____control_process_control_law_position_input" source="t_exec_control_law" target="pcap_position_sensor_control_law"/>
+
+
+
+<place id="pevent_cap_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation">
+<name><text>pevent_cap_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+<arc id="f_ev_cap_send_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation" source="pevent_cap_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation" target="tsend_position_sensor_sensor_status"/>
+<arc id="f_event_conn_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation" source="tsend_position_sensor_sensor_status" target="pqueue_main_actuator_activation"/>
+<arc id="f_ev_cap_return_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation" source="t_disp_main_actuator" target="pevent_cap_sensor_process_position_sensor_sensor_status____actuator_process_main_actuator_activation"/>
+
+<place id="pdata_velocity_sensor_control_law">
+<name><text>pdata_velocity_sensor_control_law</text></name>
+</place>
+<place id="pcap_velocity_sensor_control_law">
+<name><text>pcap_velocity_sensor_control_law</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_sensor_process_velocity_sensor_velocity_output____control_process_control_law_velocity_input" source="pcap_velocity_sensor_control_law" target="t_comp_velocity_sensor"/>
+<arc id="f_data_prod_sensor_process_velocity_sensor_velocity_output____control_process_control_law_velocity_input" source="t_comp_velocity_sensor" target="pdata_velocity_sensor_control_law"/>
+<arc id="f_data_cons_sensor_process_velocity_sensor_velocity_output____control_process_control_law_velocity_input" source="pdata_velocity_sensor_control_law" target="t_exec_control_law"/>
+<arc id="f_cap_cons_sensor_process_velocity_sensor_velocity_output____control_process_control_law_velocity_input" source="t_exec_control_law" target="pcap_velocity_sensor_control_law"/>
+
+
+
+<place id="pevent_cap_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input">
+<name><text>pevent_cap_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+<arc id="f_ev_cap_send_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input" source="pevent_cap_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input" target="tsend_velocity_sensor_thrust_adjustment"/>
+<arc id="f_event_conn_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input" source="tsend_velocity_sensor_thrust_adjustment" target="pqueue_control_law_thrust_input"/>
+<arc id="f_ev_cap_return_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input" source="t_disp_control_law" target="pevent_cap_sensor_process_velocity_sensor_thrust_adjustment____control_process_control_law_thrust_input"/>
+
+<place id="pdata_control_law_main_actuator">
+<name><text>pdata_control_law_main_actuator</text></name>
+</place>
+<place id="pcap_control_law_main_actuator">
+<name><text>pcap_control_law_main_actuator</text></name>
+<initialMarking><text>1</text></initialMarking>
+</place>
+
+<arc id="f_cap_prod_control_process_control_law_control_output____actuator_process_main_actuator_command_input" source="pcap_control_law_main_actuator" target="t_comp_control_law"/>
+<arc id="f_data_prod_control_process_control_law_control_output____actuator_process_main_actuator_command_input" source="t_comp_control_law" target="pdata_control_law_main_actuator"/>
+<arc id="f_data_cons_control_process_control_law_control_output____actuator_process_main_actuator_command_input" source="pdata_control_law_main_actuator" target="t_exec_main_actuator"/>
+<arc id="f_cap_cons_control_process_control_law_control_output____actuator_process_main_actuator_command_input" source="t_exec_main_actuator" target="pcap_control_law_main_actuator"/>
+
+
+</page>
+</net>
+</pnml>

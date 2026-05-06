@@ -1,0 +1,15 @@
+Rule: Explicit_Shared_Data_Access
+Target: threads 'Producer' and 'Consumer', and 'process implementation prodcons_soft.impl'.
+Action: 
+  1. Create a 'data' component 'Shared_Buffer' in the package.
+  2. Add 'data_rw : data Shared_Buffer;' as a subcomponent in 'prodcons_soft.impl'.
+  3. Add 'requires data access Shared_Buffer' to the 'features' of both 'Producer' and 'Consumer' threads.
+Justification: Transforms the implicit code-level communication into an explicit architectural dependency that can be analyzed for data consistency and race conditions.
+
+Rule: Define_Subprogram_Parameters
+Target: subprograms 'Producer_Spg' and 'Consumer_Spg'.
+Action: Add 'features' to each subprogram, specifically an 'out parameter' for the Producer and an 'in parameter' for the Consumer, linked to the 'Shared_Buffer' type.
+Justification: Bridges the gap between the AADL architectural model and the actual C source code (prodcons.c), ensuring the LLM understands how data enters and exits the functional logic.
+
+
+
