@@ -1,0 +1,154 @@
+[comment encoding = UTF-8 /]
+[module generate('http://aadl.info/AADL/2.0/instance')]
+
+[template public generateElement(aSystemInstance : SystemInstance)]
+[comment @main/]
+[file (aSystemInstance.name.concat('.pnml'), false, 'UTF-8')]<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="[aSystemInstance.name/]" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <page id="top-level">
+      <name>
+        <text>[aSystemInstance.name/] PN</text>
+      </name>
+      <place id="p_on_[aSystemInstance.name/]">
+        <name><text>p_on_[aSystemInstance.name/]</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <transition id="t_init_[aSystemInstance.name/]">
+        <name><text>t_init_[aSystemInstance.name/]</text></name>
+      </transition>
+      <arc id="f_sys_on_init_[aSystemInstance.name/]" source="p_on_[aSystemInstance.name/]" target="t_init_[aSystemInstance.name/]"/>
+[for (proc : ComponentInstance | aSystemInstance.eAllContents(ComponentInstance)->asSequence()->union(Sequence{aSystemInstance}))]
+  [if (proc.category.toString() = 'process')]
+      <place id="p_active_[proc.name/]">
+        <name><text>p_active_[proc.name/]</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_start_[proc.name/]">
+        <name><text>t_start_[proc.name/]</text></name>
+      </transition>
+      <transition id="t_stop_[proc.name/]">
+        <name><text>t_stop_[proc.name/]</text></name>
+      </transition>
+      <arc id="f_proc_active_start_[proc.name/]" source="p_active_[proc.name/]" target="t_start_[proc.name/]"/>
+      <arc id="f_proc_active_stop_[proc.name/]" source="p_active_[proc.name/]" target="t_stop_[proc.name/]"/>
+      <arc id="f_sys_to_proc_[proc.name/]" source="t_init_[aSystemInstance.name/]" target="p_active_[proc.name/]"/>
+  [/if]
+[/for]
+[for (thr : ComponentInstance | aSystemInstance.eAllContents(ComponentInstance)->asSequence()->union(Sequence{aSystemInstance}))]
+  [if (thr.category.toString() = 'thread')]
+      <place id="p_idle_[thr.name/]">
+        <name><text>p_idle_[thr.name/]</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_ready_[thr.name/]">
+        <name><text>p_ready_[thr.name/]</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <place id="p_run_[thr.name/]">
+        <name><text>p_run_[thr.name/]</text></name>
+        <initialMarking><text>0</text></initialMarking>
+      </place>
+      <transition id="t_disp_[thr.name/]">
+        <name><text>t_disp_[thr.name/]</text></name>
+      </transition>
+      <transition id="t_exec_[thr.name/]">
+        <name><text>t_exec_[thr.name/]</text></name>
+      </transition>
+      <transition id="t_comp_[thr.name/]">
+        <name><text>t_comp_[thr.name/]</text></name>
+      </transition>
+      <arc id="f_idle_disp_[thr.name/]" source="p_idle_[thr.name/]" target="t_disp_[thr.name/]"/>
+      <arc id="f_disp_ready_[thr.name/]" source="t_disp_[thr.name/]" target="p_ready_[thr.name/]"/>
+      <arc id="f_ready_exec_[thr.name/]" source="p_ready_[thr.name/]" target="t_exec_[thr.name/]"/>
+      <arc id="f_exec_run_[thr.name/]" source="t_exec_[thr.name/]" target="p_run_[thr.name/]"/>
+      <arc id="f_run_comp_[thr.name/]" source="p_run_[thr.name/]" target="t_comp_[thr.name/]"/>
+      <arc id="f_comp_idle_[thr.name/]" source="t_comp_[thr.name/]" target="p_idle_[thr.name/]"/>
+    [let parent : ComponentInstance = thr.eContainer(ComponentInstance)]
+      [if (parent <> null and parent.category.toString() = 'process')]
+      <arc id="f_start_thread_[thr.name/]" source="t_start_[parent.name/]" target="p_idle_[thr.name/]"/>
+      [/if]
+    [/let]
+    [for (feat : FeatureInstance | thr.featureInstance)]
+      [if (feat.category.toString().contains('event') and feat.direction.toString() = 'out')]
+      <place id="pbuf_[thr.name/]_[feat.name/]">
+        <name><text>pbuf_[thr.name/]_[feat.name/]</text></name>
+      </place>
+      <place id="pbuf_cap_[thr.name/]_[feat.name/]">
+        <name><text>pbuf_cap_[thr.name/]_[feat.name/]</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <transition id="tsend_[thr.name/]_[feat.name/]">
+        <name><text>tsend_[thr.name/]_[feat.name/]</text></name>
+      </transition>
+      <arc id="f_comp_buf_cap_[thr.name/]_[feat.name/]" source="pbuf_cap_[thr.name/]_[feat.name/]" target="t_comp_[thr.name/]"/>
+      <arc id="f_comp_buf_[thr.name/]_[feat.name/]" source="t_comp_[thr.name/]" target="pbuf_[thr.name/]_[feat.name/]"/>
+      <arc id="f_buf_send_[thr.name/]_[feat.name/]" source="pbuf_[thr.name/]_[feat.name/]" target="tsend_[thr.name/]_[feat.name/]"/>
+      <arc id="f_send_buf_cap_[thr.name/]_[feat.name/]" source="tsend_[thr.name/]_[feat.name/]" target="pbuf_cap_[thr.name/]_[feat.name/]"/>
+      [/if]
+      [if (feat.category.toString().contains('event') and feat.direction.toString() = 'in')]
+      <place id="pqueue_[thr.name/]_[feat.name/]">
+        <name><text>pqueue_[thr.name/]_[feat.name/]</text></name>
+      </place>
+      <arc id="f_queue_disp_[thr.name/]_[feat.name/]" source="pqueue_[thr.name/]_[feat.name/]" target="t_disp_[thr.name/]"/>
+      [/if]
+      [if (feat.category.toString() = 'dataAccess')]
+      <place id="p_resource_[feat.name/]">
+        <name><text>Shared_Buffer_[feat.name/]</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <arc id="f_access_in_[feat.name/]" source="p_resource_[feat.name/]" target="t_exec_[thr.name/]"/>
+      <arc id="f_access_out_[feat.name/]" source="t_comp_[thr.name/]" target="p_resource_[feat.name/]"/>
+      [/if]
+    [/for]
+  [/if]
+[/for]
+[for (conn : ConnectionInstance | aSystemInstance.eAllContents(ConnectionInstance))]
+  [let cleanID : String = conn.name.replaceAll('[^a-zA-Z0-9_]', '_')]
+    [if (conn.kind.toString() = 'accessConnection')]
+      [let featInst : FeatureInstance = if conn.source.oclIsKindOf(FeatureInstance) then conn.source.oclAsType(FeatureInstance) else (if conn.destination.oclIsKindOf(FeatureInstance) then conn.destination.oclAsType(FeatureInstance) else null endif) endif]
+        [if (featInst <> null)]
+          [let thrInst : ComponentInstance = featInst.eContainer(ComponentInstance)]
+      <arc id="f_conn_in_[cleanID/]" source="p_resource_[featInst.name/]" target="t_exec_[thrInst.name/]"/>
+      <arc id="f_conn_out_[cleanID/]" source="t_comp_[thrInst.name/]" target="p_resource_[featInst.name/]"/>
+          [/let]
+        [/if]
+      [/let]
+    [else]
+      [if (conn.source.oclIsKindOf(FeatureInstance) and conn.destination.oclIsKindOf(FeatureInstance))]
+        [let src : FeatureInstance = conn.source.oclAsType(FeatureInstance)]
+        [let dst : FeatureInstance = conn.destination.oclAsType(FeatureInstance)]
+        [let srcComp : ComponentInstance = src.eContainer(ComponentInstance)]
+        [let dstComp : ComponentInstance = dst.eContainer(ComponentInstance)]
+          [if (src.category.toString().contains('data'))]
+      <place id="pdata_[srcComp.name/]_[dstComp.name/]">
+        <name><text>pdata_[srcComp.name/]_[dstComp.name/]</text></name>
+      </place>
+      <place id="pcap_[srcComp.name/]_[dstComp.name/]">
+        <name><text>pcap_[srcComp.name/]_[dstComp.name/]</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <arc id="f_cap_prod_[cleanID/]" source="pcap_[srcComp.name/]_[dstComp.name/]" target="t_comp_[srcComp.name/]"/>
+      <arc id="f_data_prod_[cleanID/]" source="t_comp_[srcComp.name/]" target="pdata_[srcComp.name/]_[dstComp.name/]"/>
+      <arc id="f_data_cons_[cleanID/]" source="pdata_[srcComp.name/]_[dstComp.name/]" target="t_exec_[dstComp.name/]"/>
+      <arc id="f_cap_cons_[cleanID/]" source="t_exec_[dstComp.name/]" target="pcap_[srcComp.name/]_[dstComp.name/]"/>
+          [/if]
+          [if (src.category.toString().contains('event'))]
+      <place id="pevent_cap_[cleanID/]">
+        <name><text>pevent_cap_[cleanID/]</text></name>
+        <initialMarking><text>1</text></initialMarking>
+      </place>
+      <arc id="f_ev_cap_send_[cleanID/]" source="pevent_cap_[cleanID/]" target="tsend_[srcComp.name/]_[src.name/]"/>
+      <arc id="f_event_conn_[cleanID/]" source="tsend_[srcComp.name/]_[src.name/]" target="pqueue_[dstComp.name/]_[dst.name/]"/>
+      <arc id="f_ev_cap_return_[cleanID/]" source="t_disp_[dstComp.name/]" target="pevent_cap_[cleanID/]"/>
+          [/if]
+        [/let][/let][/let][/let]
+      [/if]
+    [/if]
+  [/let]
+[/for]
+    </page>
+  </net>
+</pnml>
+[/file]
+[/template]
