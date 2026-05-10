@@ -9,7 +9,7 @@
 
 <place id="p_on_FlightControlSystemRefined_Impl_Instance">
 <name><text>p_on_FlightControlSystemRefined_Impl_Instance</text></name>
-<initialMarking><text>5</text></initialMarking>
+<initialMarking><text>1</text></initialMarking>
 </place>
 
 <transition id="t_init_FlightControlSystemRefined_Impl_Instance">
